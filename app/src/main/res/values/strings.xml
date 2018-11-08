@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">GooglePlusApp</string>
+    <string name="drawer_open">drawer open</string>
+    <string name="drawer_close">drawer close</string>
+    <string name="sign_in_google">Sign in with Google</string>
+    <string name="account">Account</string>
+    <string name="log_out">Log out</string>
+    <string name="business">Business</string>
+    <string name="entrepreneurs">Entrepreneurs</string>
+    <string name="networkError">No internet. Check it please</string>
 </resources>
