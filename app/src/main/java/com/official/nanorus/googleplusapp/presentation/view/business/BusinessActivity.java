@@ -208,6 +208,7 @@ public class BusinessActivity extends AppCompatActivity implements IBusinessView
     @Override
     public void showProgress(boolean b) {
         swipeRefreshLayout.setRefreshing(b);
+        adapter.suspendItemClickListener(b);
     }
 
 

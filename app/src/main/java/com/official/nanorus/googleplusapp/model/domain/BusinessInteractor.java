@@ -5,7 +5,9 @@ import com.official.nanorus.googleplusapp.model.repository.business.BusinessRepo
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public class BusinessInteractor {
 
@@ -21,7 +23,9 @@ public class BusinessInteractor {
 
     public Observable<List<Businessman>> getBusinessmen() {
         return businessRepository.getBusinessmen();
-       // return businessRepository.getRefreshedBusinessmen();
     }
 
+    public Single<Businessman> getBusinessman(int businessmanId) {
+        return businessRepository.getBusinessman(businessmanId);
+    }
 }

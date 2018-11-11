@@ -20,4 +20,10 @@
         <item name="android:textColor">@color/white_90</item>
     </style>
 
+    <style name="PrimaryBigTextViewDark">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
 </resources>

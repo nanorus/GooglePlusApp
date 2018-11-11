@@ -32,7 +32,8 @@ public class Businessman {
     @Expose
     private Company company;
 
-    public Businessman(String name, String username, String email, Address address, String phone, String website, Company company) {
+    public Businessman(int id, String name, String username, String email, Address address, String phone, String website, Company company) {
+        this.id = id;
         this.name = name;
         this.username = username;
         this.email = email;
@@ -42,9 +43,8 @@ public class Businessman {
         this.company = company;
     }
 
-    public Businessman(){}
-
-    public Businessman(String name, String username, String email, String phone, String website) {
+    public Businessman(int id, String name, String username, String email, String phone, String website) {
+        this.id = id;
         this.name = name;
         this.username = username;
         this.email = email;
@@ -116,12 +116,13 @@ public class Businessman {
         this.company = company;
     }
 
-    public static Businessman map(DBBusinessman dbBusinessman){
-        return new Businessman(dbBusinessman.name, dbBusinessman.username, dbBusinessman.email,
-                dbBusinessman.phone,dbBusinessman.website);
+    public static Businessman map(DBBusinessman dbBusinessman) {
+        return new Businessman(dbBusinessman.id, dbBusinessman.name, dbBusinessman.username, dbBusinessman.email,
+                dbBusinessman.phone, dbBusinessman.website);
     }
-    public static Businessman map(DBBusinessman dbBusinessman, Address address, Company company){
-        return new Businessman(dbBusinessman.name, dbBusinessman.username, dbBusinessman.email, address,
+
+    public static Businessman map(DBBusinessman dbBusinessman, Address address, Company company) {
+        return new Businessman(dbBusinessman.id, dbBusinessman.name, dbBusinessman.username, dbBusinessman.email, address,
                 dbBusinessman.phone, dbBusinessman.website, company);
     }
 

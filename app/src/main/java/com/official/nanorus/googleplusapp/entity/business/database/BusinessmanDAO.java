@@ -8,13 +8,15 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
+
 @Dao
 public interface BusinessmanDAO {
     @Query("SELECT * FROM dbbusinessman")
-    Flowable <List<DBBusinessman>> getAll();
+    Flowable<List<DBBusinessman>> getAll();
 
     @Query("SELECT * FROM dbbusinessman WHERE id = :id")
-    Flowable <DBBusinessman> getById(long id);
+    Single<DBBusinessman> getById(long id);
 
     @Insert
     void insert(DBBusinessman dbBusinessman);

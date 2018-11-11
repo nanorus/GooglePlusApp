@@ -15,37 +15,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
 
 public class BusinessRepository {
     private String TAG = this.getClass().getName();
     private BusinessRetroClient retroClient;
+    private AppDatabase appDatabase;
 
     public BusinessRepository() {
         retroClient = BusinessRetroClient.getInstance();
+        appDatabase = AppDatabase.getInstance();
     }
 
     public Observable<List<Businessman>> getRefreshedBusinessmen() {
         return retroClient.getBusinessmenService().getBusinessmen()
-                .map(businessmen -> {
-                    AppDatabase appDatabase = AppDatabase.getInstance();
+                .flatMap((Function<List<Businessman>, ObservableSource<List<Businessman>>>) businessmen -> {
                     Log.d(TAG, "Clear db");
                     appDatabase.businessmanDao().clearTable();
 
                     Log.d(TAG, "Inserting into db");
                     for (Businessman businessman : businessmen) {
-                        long adressId = appDatabase.addressDao().insert(DBAddress.map(businessman.getAddress()));
+                        long addressId = appDatabase.addressDao().insert(DBAddress.map(businessman.getAddress()));
                         long companyId = appDatabase.companyDao().insert(DBCompany.map(businessman.getCompany()));
-                        appDatabase.businessmanDao().insert(DBBusinessman.map(businessman, adressId, companyId));
+                        appDatabase.businessmanDao().insert(DBBusinessman.map(businessman, addressId, companyId));
                     }
-                    return businessmen;
+                    return getBusinessmen();
                 });
 
     }
 
     public Observable<List<Businessman>> getBusinessmen() {
-        AppDatabase appDatabase = AppDatabase.getInstance();
         Observable<List<DBBusinessman>> dbBusinessmanObservable = appDatabase.businessmanDao().getAll().toObservable();
         Observable<List<Businessman>> businessmanObservable = dbBusinessmanObservable
                 .map(dbBusinessmen -> {
@@ -58,9 +59,18 @@ public class BusinessRepository {
                     }
                     return businessmen;
                 });
-
-
         return businessmanObservable;
+    }
 
+    public Single<Businessman> getBusinessman(long id) {
+        return appDatabase.businessmanDao().getById(id).map(
+                dbBusinessman -> {
+                    Address address = Address.map(appDatabase.addressDao().getById(dbBusinessman.id));
+                    Company company = Company.map(appDatabase.companyDao().getById(dbBusinessman.id));
+                    return Businessman.map(dbBusinessman, address, company);
+                }
+
+
+        );
     }
 }

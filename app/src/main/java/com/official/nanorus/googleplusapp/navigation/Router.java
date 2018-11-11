@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.official.nanorus.googleplusapp.entity.business.api.Businessman;
 import com.official.nanorus.googleplusapp.presentation.view.auth.AuthActivity;
 import com.official.nanorus.googleplusapp.presentation.view.business.BusinessActivity;
+import com.official.nanorus.googleplusapp.presentation.view.businessman_info.BusinessmanInfoActivity;
 
 public class Router {
 
@@ -21,14 +23,20 @@ public class Router {
         activity.finish();
     }
 
+    public void startAuthActivityWithFinish(Activity activity) {
+        activity.startActivity(new Intent(activity, AuthActivity.class));
+        activity.finish();
+    }
+
     public void startMainActivityWithFinish(Activity activity) {
         activity.startActivity(new Intent(activity, BusinessActivity.class));
         activity.finish();
     }
 
-    public void startAuthActivityWithFinish(Activity activity) {
-        activity.startActivity(new Intent(activity, AuthActivity.class));
-        activity.finish();
+    public void startBusinessmanInfoActivity(Context context, int businessmanId) {
+        Intent intent = new Intent(context, BusinessmanInfoActivity.class);
+        intent.putExtra(BusinessmanInfoActivity.INTENT_BUSINESSMAN_ID, businessmanId);
+        context.startActivity(intent);
     }
 
     public void signOut(Context context) {

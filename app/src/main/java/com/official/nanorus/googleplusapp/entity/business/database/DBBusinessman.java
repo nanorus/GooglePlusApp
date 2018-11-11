@@ -10,7 +10,7 @@ import com.official.nanorus.googleplusapp.entity.business.api.Businessman;
         @ForeignKey(entity = DBCompany.class, parentColumns = "id", childColumns = "company")})
 public class DBBusinessman {
     @PrimaryKey(autoGenerate = true)
-    public long id;
+    public int id;
     public String name;
     public String username;
     public String email;
@@ -29,8 +29,8 @@ public class DBBusinessman {
         this.company = company;
     }
 
-    public static DBBusinessman map(Businessman businessman, long adressId, long companyId) {
-        return new DBBusinessman(businessman.getName(), businessman.getUsername(), businessman.getEmail(), adressId, businessman.getPhone(),
+    public static DBBusinessman map(Businessman businessman, long addressId, long companyId) {
+        return new DBBusinessman(businessman.getName(), businessman.getUsername(), businessman.getEmail(), addressId, businessman.getPhone(),
                 businessman.getWebsite(), companyId);
     }
 }
