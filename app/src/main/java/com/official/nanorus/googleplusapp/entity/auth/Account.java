@@ -1,7 +1,5 @@
 package com.official.nanorus.googleplusapp.entity.auth;
 
-import com.google.firebase.auth.FirebaseUser;
-
 public class Account {
 
     private String avatar;
@@ -38,9 +36,4 @@ public class Account {
         this.email = email;
     }
 
-    public static Account map(FirebaseUser user) {
-        if (user != null)
-            return new Account(user.getPhotoUrl().toString(), user.getDisplayName(), user.getEmail());
-        else return null;
-    }
 }

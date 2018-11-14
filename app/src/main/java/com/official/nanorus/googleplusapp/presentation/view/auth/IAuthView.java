@@ -6,9 +6,4 @@ public interface IAuthView {
 
     Activity getView();
 
-    void checkAuth();
-
-    void signIn();
-
-    void auth();
 }

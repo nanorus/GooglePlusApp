@@ -3,6 +3,7 @@ package com.official.nanorus.googleplusapp.presentation.view.business;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
@@ -10,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,7 +24,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.firebase.auth.FirebaseAuth;
 import com.official.nanorus.googleplusapp.R;
 import com.official.nanorus.googleplusapp.entity.auth.Account;
 import com.official.nanorus.googleplusapp.entity.business.api.Businessman;
@@ -40,8 +39,6 @@ import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation;
 
 public class BusinessActivity extends AppCompatActivity implements IBusinessView {
     private String TAG = this.getClass().getName();
-
-    FirebaseAuth auth;
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -68,18 +65,17 @@ public class BusinessActivity extends AppCompatActivity implements IBusinessView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business);
         ButterKnife.bind(this);
-        auth = FirebaseAuth.getInstance();
 
-        Account account = Account.map(auth.getCurrentUser());
-        setupNavigationDrawer(account);
+
 
         initList();
-        swipeRefreshLayout.setOnRefreshListener(() -> presenter.onRefresh());
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.swipe_refresh_color_1),
-                getResources().getColor(R.color.swipe_refresh_color_2), getResources().getColor(R.color.swipe_refresh_color_3));
 
         presenter = new BusinessPresenter();
         presenter.bindView(this);
+
+        swipeRefreshLayout.setOnRefreshListener(() -> presenter.onRefresh());
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.swipe_refresh_color_1),
+                getResources().getColor(R.color.swipe_refresh_color_2), getResources().getColor(R.color.swipe_refresh_color_3));
     }
 
     private void initList() {
@@ -115,7 +111,8 @@ public class BusinessActivity extends AppCompatActivity implements IBusinessView
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-    private void setupNavigationDrawer(Account account) {
+    @Override
+    public void setupNavigationDrawer(Account account) {
         View headerLayout = navigationView.getHeaderView(0);
         drawerHeaderAvatarImageView = headerLayout.findViewById(R.id.drawer_header_avatar);
         drawerHeaderNameTextView = headerLayout.findViewById(R.id.drawer_header_name);
@@ -148,7 +145,6 @@ public class BusinessActivity extends AppCompatActivity implements IBusinessView
                     Toast.makeText(this, "entrepreneurs", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.menu_item_log_out:
-                    Toast.makeText(this, "log_out", Toast.LENGTH_SHORT).show();
                     presenter.onLogOutClicked();
                     break;
             }
@@ -178,11 +174,6 @@ public class BusinessActivity extends AppCompatActivity implements IBusinessView
     @Override
     public Activity getView() {
         return this;
-    }
-
-    @Override
-    public void checkAuth() {
-        presenter.onAuthChecked(auth.getCurrentUser() != null);
     }
 
     @Override

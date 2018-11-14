@@ -4,14 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.official.nanorus.googleplusapp.entity.business.api.Businessman;
 import com.official.nanorus.googleplusapp.presentation.view.auth.AuthActivity;
 import com.official.nanorus.googleplusapp.presentation.view.business.BusinessActivity;
 import com.official.nanorus.googleplusapp.presentation.view.businessman_info.BusinessmanInfoActivity;
 
 public class Router {
+    private String TAG = this.getClass().getName();
 
-    public static Router instance;
+    private static Router instance;
 
     public static Router getInstance() {
         if (instance == null)

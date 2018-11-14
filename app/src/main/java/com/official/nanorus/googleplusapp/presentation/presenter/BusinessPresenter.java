@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.official.nanorus.googleplusapp.R;
+import com.official.nanorus.googleplusapp.entity.auth.Account;
+import com.official.nanorus.googleplusapp.model.data.GoogleAuth;
 import com.official.nanorus.googleplusapp.model.data.Utils;
 import com.official.nanorus.googleplusapp.model.domain.BusinessInteractor;
 import com.official.nanorus.googleplusapp.navigation.Router;
@@ -21,18 +23,22 @@ public class BusinessPresenter {
     private Router router;
     private BusinessInteractor interactor;
     private Disposable businessmenDisposable;
+    private GoogleAuth googleAuth;
 
     public BusinessPresenter() {
+        googleAuth = GoogleAuth.getInstance();
         router = Router.getInstance();
         interactor = new BusinessInteractor();
     }
 
     public void bindView(IBusinessView view) {
         this.view = view;
+        Account account = googleAuth.getCurrentUser();
+        view.setupNavigationDrawer(account);
     }
 
     public void onViewStart() {
-        view.checkAuth();
+        onAuthChecked(googleAuth.isSignedIn());
     }
 
     public void onAuthChecked(boolean signedIn) {

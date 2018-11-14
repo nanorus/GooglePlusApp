@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.akashandroid90.imageletter.MaterialLetterIcon;
 import com.official.nanorus.googleplusapp.R;
 import com.official.nanorus.googleplusapp.entity.business.api.Businessman;
+import com.official.nanorus.googleplusapp.model.data.ResourceManager;
 import com.official.nanorus.googleplusapp.navigation.Router;
 
 import java.util.ArrayList;
@@ -18,11 +20,13 @@ public class BusinessmenRecyclerViewAdapter extends RecyclerView.Adapter<Busines
 
     private List<Businessman> dataList;
     private Router router;
+    private ResourceManager resourceManager;
     private boolean suspendItemClickListener = true;
 
     public BusinessmenRecyclerViewAdapter() {
         dataList = new ArrayList<>();
         router = Router.getInstance();
+        resourceManager = ResourceManager.getInstance();
     }
 
     public void clearList() {
@@ -61,6 +65,12 @@ public class BusinessmenRecyclerViewAdapter extends RecyclerView.Adapter<Busines
         Businessman businessman = dataList.get(position);
         holder.name.setText(businessman.getName());
         holder.email.setText(businessman.getEmail());
+
+        String name = businessman.getName();
+        String initials = String.valueOf(name.charAt(0)) + String.valueOf(name.charAt(name.indexOf(" ") + 1));
+        holder.letterIcon.setLetter(initials);
+        holder.letterIcon.setShapeColor(resourceManager.getLetterIconShapeColor(position));
+
         holder.itemView.setOnClickListener(view -> {
             if (!suspendItemClickListener)
                 router.startBusinessmanInfoActivity(holder.itemView.getContext(), businessman.getId());
@@ -70,11 +80,13 @@ public class BusinessmenRecyclerViewAdapter extends RecyclerView.Adapter<Busines
     class BusinessmenRecyclerViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         TextView email;
+        MaterialLetterIcon letterIcon;
 
         public BusinessmenRecyclerViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
             email = itemView.findViewById(R.id.tv_email);
+            letterIcon = itemView.findViewById(R.id.letterIcon);
         }
     }
 }

@@ -6,6 +6,7 @@
 
     <color name="white">#FFFFFF</color>
     <color name="white_90">#90FFFFFF</color>
+    <color name="grey_light">#f4f4f4</color>
     <color name="transparent">#00000000</color>
 
     <color name="textPrimary">#212121</color>
@@ -15,5 +16,12 @@
     <color name="swipe_refresh_color_3">#F44336</color>
     <color name="swipe_refresh_color_2">#FFEB3B</color>
     <color name="swipe_refresh_color_1">#00BCD4</color>
+
+    <color name="imageLetter_color_1">#6A1B9A</color>
+    <color name="imageLetter_color_2">#1565C0</color>
+    <color name="imageLetter_color_3">#00838F</color>
+    <color name="imageLetter_color_4">#00695C</color>
+    <color name="imageLetter_color_5">#2E7D32</color>
+    <color name="auth_background">#FFFFFF</color>
 
 </resources>

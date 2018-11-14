@@ -8,4 +8,6 @@
     <string name="business">Business</string>
     <string name="entrepreneurs">Entrepreneurs</string>
     <string name="networkError">No internet. Check it please</string>
+    <string name="auth_failed">Authentication failed</string>
+    <string name="sign_in_message">You can sign in in application by using Google account</string>
 </resources>
